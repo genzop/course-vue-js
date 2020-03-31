@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04. Styling</title>
+
+    <style>
+        .demo {
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .red {
+            background-color: red;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+    </style>
+
+    <script src="../../vue.js"></script>
+</head>
+
+<body>
+    <div id="app">      
+        <!-- Clases -->
+        <!-- Se puede vincular una clase de CSS dependiendo del valor de una propiedad, esto se expresa en un objeto en donde el key es el nombre de la clase y el value la condicion que debe cumplir -->
+        <div class="demo" @click="attachRed = !attachRed" :class="{red: attachRed}"></div>
+        <!-- El objeto puede almacenarse como una propiedad computada -->
+        <div class="demo" :class="divClasses"></div>
+        <!-- Se puede vincular la clase a un nombre de clase -->
+        <div class="demo" :class="color"></div>
+        <!-- Se pueden combinar un nombre de clase y un objeto calculado dentro de un array -->
+        <div class="demo" :class="[color, {red: attachRed}]"></div>
+        <br>
+        <input type="text" v-model="color">
+        <hr>
+        <!-- Estilos: se aplican las mismas reglas que vimos en las clases -->
+        <div class="demo" :style="{backgroundColor: color2}"></div>
+        <div class="demo" :style="myStyle"></div>
+        <div class="demo" :style="[myStyle, { height: width + 'px'}]"></div>
+        <br>
+        <input type="text" v-model="color2">
+        <input type="text" v-model="width">
+    </div>
+
+    <script type="text/javascript">
+        new Vue({
+            el: '#app',
+            data: {
+                attachRed: false,
+                color: 'green',
+                color2: 'gray',
+                width: 100
+            },
+            computed: {
+                divClasses: function() {
+                    return {
+                        red: this.attachRed,
+                        blue: !this.attachRed
+                    };
+                },
+                myStyle: function() {
+                    return {
+                        backgroundColor: this.color2,
+                        width: this.width + 'px',
+                    };
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

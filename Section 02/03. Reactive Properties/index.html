@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03. Reactive Properties</title>
+
+    <script src="../../vue.js"></script>
+</head>
+
+<body>
+    <div id="app">        
+        <!-- v-model: permite realizar una vinculacion bidireccional entre la propiedad y la  etiqueta.  -->
+        <input type="text" v-model="name">
+        <p>{{ name }}</p>
+        <hr style="margin: 20px 0px">
+        <button v-on:click="counter++">Increase</button>
+        <button v-on:click="counter--">Decrease</button>
+        <button v-on:click="secondCounter++">Increase Second</button>
+        <p>Counter: {{ counter }} | {{ secondCounter }}</p>
+        <!-- Los metodos son llamados utilizando parentesis. Las propiedades computed son llamadas como propiedades comunes -->
+        <p>Result: {{ result() }} | {{ output }}</p>
+        <hr style="margin: 20px 0px">
+        <!-- Shortcuts -->
+        <!-- v-on- == @ -->
+        <button @click="">Click to Change Link</button>
+        <!-- v-bind- == : -->
+        <a :href="">Link</a>
+    </div>
+
+    <script type="text/javascript">
+        new Vue({
+            el: '#app',
+            data: {
+                name: 'Enzo',
+                counter: 0,                
+                secondCounter: 0,
+                link: 'http://www.google.com.ar',
+            },
+            // Computed: son propiedades calculadas y que solo se renderizan nuevamente cuando alguna de las propiedades utilizadas es modificada
+            computed: {
+                output: function() {
+                    console.log('Computed');
+                    return this.counter > 5 ? 'Greater than 5' : 'Smaller than 5';
+                }
+            },
+            // Watch: permite realizar acciones cuando alguna propiedad es actualizada
+            watch: {
+                counter: function(value) {
+                    var vm = this;
+                    setTimeout(function() {
+                        vm.counter = 0;
+                    }, 2000);
+                },
+            },
+            // Metodos: si son utilizados como propiedades, se renderizan nuevamente cada vez que algo en la pantalla se actualice
+            methods: {
+                result: function() {
+                    console.log('Method');
+                    return this.counter > 5 ? 'Greater than 5' : 'Smaller than 5';
+                },
+                changeLink: function() {
+                    this.link = 'http://www.gmail.com/';
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>

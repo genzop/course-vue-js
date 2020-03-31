@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02. Events</title>
+
+    <script src="../../vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-on: Permite vincular un evento de html con algun metodo. Es compatible con todos los eventos del DOM -->
+        <button v-on:click="increase">Click me</button>
+        <!-- Es posible enviar parametros personalizados a una funcion. Tambien es posible seguir enviando el objeto del evento con el parametro $event -->
+        <button v-on:click="increaseStep(2, $event)">Click me</button>
+        <!-- Tambien es posible ingresar codigo JS en todos los lugares donde se acceda a la instancia de Vue -->
+        <button v-on:click="counter++">Click me</button>
+        <p>{{ counter }}</p>
+        <p v-on:mousemove="update">Coordinates: {{ x }} / {{ y }}</p>
+        <p v-on:mousemove="update">
+            Coordinates: {{ x }} / {{ y }} - 
+            <!-- Event Modifier: es un acceso directo a metodos propios del evento. En este caso, stop llama a 'stopPropagation'. Tambien pueden encadenarse uno detras de otro -->
+            <span v-on:mousemove.stop="">DEAD SPOT</span>
+        </p>
+        <!-- Key Modifier: es un event modifier que permite interceptar cuando ciertas teclas son presionadas. Estos modificadores pueden encadenarse -->
+        <input type="text" v-on:keyup.enter.space="alertMe">
+    </div>
+
+    <script type="text/javascript">
+        new Vue({
+            el: '#app',
+            data: {
+                counter: 0,
+                x: 0,
+                y: 0
+            },
+            methods: {
+                increase: function () {
+                    this.counter++;
+                },
+                // Un evento automaticamente le pasa a la funcion que lo escucha el objeto 'event' que contiene toda la informacion de dicho evento
+                update: function (e) {
+                    this.x = e.clientX;
+                    this.y = e.clientY;
+                },
+                increaseStep: function (step, e) {
+                    this.counter += step;
+                },
+                alertMe: function() {
+                    alert('Warning!');
+                }
+
+            },
+        })
+    </script>
+</body>
+
+</html>

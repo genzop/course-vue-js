@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01. Output Data</title>
+
+    <script src="../../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- v-once: la etiqueta solo se renderizara una vez y no se actualizara por mas de que la propiedad a la que esta vinculada cambie -->
+        <h1 v-once>{{ title }}</h1>
+        <!-- Es posible utilizar metodos para mostrar su resultado -->
+        <p>{{ sayHello() }}</p>
+        <!-- v-bind: permite vincular un atributo html con alguna propiedad. No es posible utilizar las llaves en atributos HTML -->
+        <p><a v-bind:href="link">Google</a></p>
+        <hr>
+        <!-- v-html: permite renderizar html directamente. Por defecto Vue renderiza todo como texto plano -->
+        <p v-html="finishedLink"></p>
+    </div>
+
+    <script type="text/javascript">
+        new Vue({
+            el: '#app',
+            data: {
+                title: 'Hello World!',
+                link: 'http://www.google.com/',
+                finishedLink: '<a href="http://www.google.com/">Google</a>'
+            },
+            methods: {
+                sayHello: function(){
+                    this.title = 'Hello!';
+                    // Para acceder a una propiedad dentro del objeto 'data' es necesario utilizar la palabra 'this'
+                    return this.title;
+                }
+            },
+        })
+    </script>
+</body>
+</html>
