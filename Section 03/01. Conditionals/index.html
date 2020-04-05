@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01. Conditionals</title>
+
+    <script type="text/javascript" src="../../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- v-if: Agrega/Elimina un elemento y su contenido. Puede recibir una expresion booleana o una propiedad que retorne true/false -->
+        <p v-if="show">You can see me! <span>Hello!</span></p>
+        <!-- v-else-if: Otra condicion diferente -->
+        <p v-else-if="show == 2">You will never see me!</p>
+        <!-- v-else: Codigo por defecto en caso de que ninguna condicion previa se cumpla -->
+        <p v-else>Now you see me!</p>
+        <hr>
+        <!-- template: La etiqueta no se renderiza pero su contenido si por ello permite agrupar elementos sin utilizar un nuevo div -->
+        <template v-if="show">
+            <h1>Heading</h1>
+            <p>Inside a template</p>
+        </template>
+        <!-- v-show: Muestra/Esconde un elemento y su condentido. Funciona de la misma manera que v-if -->
+        <p v-show="show">Do you can also see me?</p>
+        <button @click="show = !show">Switch</button>
+    </div>
+    
+    <script type="text/javascript">
+        new Vue({
+            el: '#app',
+            data: {
+                show: true
+            }
+        })
+    </script>
+</body>
+</html>

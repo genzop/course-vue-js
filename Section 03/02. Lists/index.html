@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02. Lists</title>
+
+    <script type="text/javascript" src="../../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <!-- v-for: Itera a traves de una lista de manera similar a un $.each y renderiza N veces el elemento.  -->
+            <!-- key: permite a Vue llevar un control de que elementos contiene la lista en caso de que esta se modifique. Por ello debe ser un valor que no se repita -->
+            <li v-for="(item, index) in ingredients" :key="item">{{ item }} ({{ index }})</li>
+        </ul>
+        <!-- template: Permite agrupar varios elementos dentro del v-for sin utilizar un div nuevo -->
+        <template v-for="(item, index) in ingredients" :key="item">
+            <h1>{{ item }}</h1>
+            <p>{{ index }}</p>
+        </template>
+        <hr>
+        <ul>
+            <li v-for="item in persons" :key="item">
+                <!-- Cuando se intera dentro de las propiedades de un objeto es posible obtener tres valores:
+                Value: valor de la propiedad
+                Key: nombre de la propiedad
+                Index: posicion de la propiedad -->
+                <div v-for="(value, key, index) in item" :key="key">
+                    {{ key }}: {{ value }} ({{ index }})
+                </div>
+            </li>
+        </ul>
+        <!-- Iterar numeros -->
+        <span v-for="n in 10">{{ n }}</span>
+    </div>
+    
+    <script type="text/javascript">
+        new Vue({
+            el: '#app',
+            data: {
+                ingredients: ['meat', 'fruit', 'cookies'],
+                persons: [
+                    {name: 'Enzo', age: 24, color: 'purple'},
+                    {name: 'Sarah', age: 'unknown', color: 'purple'}
+                ]
+            }
+        })
+    </script>
+</body>
+</html>
