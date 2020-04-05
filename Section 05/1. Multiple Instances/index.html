@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1. Multiple Instances</title>
+
+    <script type="text/javascript" src="../../vue.js"></script>
+</head>
+
+<body>
+    <div id="app1">
+        <h1 ref="heading">{{ title }}</h1>
+        <!-- ref: Permite acceder a un elemento html. Puede contener cualquier string que funciona como un pseudo id -->
+        <button @click="show" ref="myButton">Show Paragraph</button>
+        <p v-if="showParagraph">This is not always visible</p>
+    </div>
+
+    <div id="app2">
+        <h1 ref="heading">{{ title }}</h1>
+        <button @click="change">Change in Vue #1</button>
+        <hello></hello>
+        <hello></hello>
+        <hello></hello>
+    </div>
+
+    <div id="app3"></div>
+
+    <script type="text/javascript">
+        // Declarar una propiedad de la instancia antes de construirla
+        var data = {
+            title: 'The VueJS Instance',
+            showParagraph: false
+        };
+
+        var vm1 = new Vue({
+            el: '#app1',
+            data: data,
+            methods: {
+                show: function () {
+                    this.showParagraph = true;
+                    this.updateTitle('The VueJS Instance (Updated)');
+                    // $refs: contiene todos los elementos que tengan el atributo ref correspondiente
+                    this.$refs.myButton.innerText = 'Test';
+                },
+                updateTitle: function (title) {
+                    this.title = title;
+                }
+            },
+            computed: {
+                lowercaseTitle: function () {
+                    return this.title.toLowerCase();
+                }
+            },
+            watch: {
+                title: function (value) {
+                    alert('Title changed, new value: ' + value);
+                }
+            }
+        });
+
+        // Montar la instancia de Vue en algun div. Cumple la misma funcion que la propiedad 'el'
+        vm1.$mount('#app1');
+
+        console.log(vm1.$data === data);
+        vm1.$refs.heading.innerText = 'Something else';
+
+        setTimeout(function () {
+            // Para modificar una instancia de Vue desde su exterior, incluso desde otra instancia
+            // Para ello es necesario guardar la instancia en una variable
+            vm1.title = 'Changed by Timer';
+            vm1.show();
+        }, 3000);
+
+        // Declarar un component de manera global. Este puede ser utilizado en todas las intancias de Vue
+        Vue.component('hello', {
+            template: '<h1>Hello!</h1>'
+        });
+
+        // Es posible manejar multiples instancias de Vue al mismo tiempo
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                title: 'The second instance'
+            },
+            methods: {
+                change: function () {
+                    vm1.title = 'Changed from another instance!';
+                }
+            }
+        })
+
+        var vm3 = new Vue({
+            template: '<h1>Hello!</h1>'
+        });
+        // Montar la instancia en el DOM pero en ningun div
+        vm3.$mount();
+        // Adjuntar el contenido de la instancia en un div
+        document.getElementById('app3').appendChild(vm3.$el);
+    </script>
+</body>
+
+</html>
