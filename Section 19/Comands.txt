@@ -1,0 +1,5 @@
+Vue CLI 2.0
+    Install                 npm install -g @vue/cli-init
+    Create project          vue init webpack my-project
+    Run project             npm run dev
+    Publish project         npm run build

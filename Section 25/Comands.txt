@@ -1,0 +1,6 @@
+Vue CLI 3.0
+    Install:                npm install -g @vue/cli
+    Update:                 npm update -g @vue/cli
+    Check version:          vue --version
+    Create project:         vue create hello-world
+    GUI:                    vue ui
