@@ -1,0 +1,33 @@
+Commands
+    Install:                    npm install -g @vue/cli    
+    Update:                     npm update -g @vue/cli
+    Check version:              vue --version
+    Add plugins:                vue add @vue/plugin-name
+
+    Create project:             vue create project-name
+    GUI:                        vue ui
+    
+    Run:                        npm run serve
+    Build:                      npm run build
+    Lint:                       npm run lint
+
+    Install global service:     npm install -g @vue/cli-service-global
+    Run single files:           vue serve file-name
+
+
+Project Structure
+    public: Static Files
+    src: Vue Files
+        assets: Images
+        components: Components
+        store: Vuex Store
+            modules: Vuex Modules
+        views: Route Components
+
+Build Targets
+    - Vue App: creates a full Vue app                      
+        vue build --target app     
+    - Vue Library: creates a Vue library that can be used only on a Vue app
+        vue build --target lib
+    - Web Components: creates a custom html tag that can be used on any web app that imports Vue
+        vue build --target wc
